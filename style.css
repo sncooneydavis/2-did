@@ -1,0 +1,62 @@
+*,
+::before,
+::after {
+	box-sizing: border-box;
+}
+:root {
+	--red: rgba(158,1,66,1);
+	--red-orange: rgba(213,62,79,1);
+	--orange: rgba(244,109,67,1);
+	--orange-yellow: rgba(253,174,97,1);
+	--yellow: rgba(254,224,139,1);
+	--pale: rgba(255, 255, 191, 1);
+	--pale-green: rgba(230,245,152,1);
+	--green:  rgba(171,221,164,1) ;
+	--green-blue: rgba(102,194,165,1); 
+	--blue: rgba(50,136,189,1);
+	--purple: rgba(94,79,162,1);
+}
+html {
+	font-family:
+		"Cabin",
+		system-ui,
+		'Segoe UI',
+		Roboto,
+		Helvetica,
+		Arial,
+		sans-serif,
+		'Apple Color Emoji',
+		'Segoe UI Emoji';
+	line-height: 1.5;
+	font-size: clamp(1rem, 0.75rem + 1.5vw, 2rem);
+	max-inline-size: 64ch;
+	-webkit-text-size-adjust: 100%; 
+	-webkit-font-smoothing: antialiased;
+	-moz-tab-size: 4; 
+	tab-size: 4;
+}
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	width: 100vw;
+	margin: 0;
+}
+h1, h2, h3, h4, h5, figure, p, ol, ul {
+	margin: 0;
+}
+ul {
+	list-style: none;
+	padding-inline: 0;
+}
+	img, picture, video, canvas, svg {
+	display: block;
+	max-width: 100%;
+}
+p {
+	overflow-wrap: break-word;
+	hyphens: auto;
+}
+/* ============================================*/
+

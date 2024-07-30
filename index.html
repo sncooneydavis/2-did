@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="./style.css" rel="stylesheet">
+		<link rel="preconnect" href="https://fonts.bunny.net">
+		<link href="https://fonts.bunny.net/css" rel="stylesheet" />	
+		<script src="./script.js" defer></script>
+		<title>2*did</title>
+	</head>
+	<body>
+		<div class="main container">
+			<div class="left pannel">
+				<div class="top toolbar">
+					<button id="switch-to-data-view" type="button">
+						<img class="switch icon" src="./images/prospective-left/toolbars/top-data-view.svg">
+					</button>
+					<div id="utility-bar">	
+						<input id="utility-input" name="utility-input" type="search" />
+						<div id="rotating-icons">
+							<button type="button">
+								<img class="search icon"src="./images/prospective-left/toolbars/utility-bar-search.svg" >
+							</button>
+							<button type="button">
+								<img class="filter icon hidden" src="./images/prospective-left/toolbars/utility-bar-filter.svg" >
+							</button>
+							<button type="button">
+								<img class="add icon hidden" img="./images/prospective-left/add.svg" >
+							</button>	
+						</div>
+					</div>
+					<button id="switch-to-default-view" type="button">
+						<img class="switch icon" src="./images/prospective-left/toolbars/top-default-view.svg" />
+					</button>
+					<div id="change-order">
+						<button type="button">
+							<img class="order icon" src="./images/prospective-left/toolbars/top-order.svg" />
+						</button>
+						<div class="dropdown hidden grouping-options">
+							<ul>Order By:
+								<li>
+									<label for="order-by-list">
+										<input id="order-by-list" type="radio" />
+										List
+									</label>
+								</li>
+								<li>
+									<label for="order-by-type">
+										<input id="order-by-type" type="radio" />
+										Type
+									</label>
+								</li>
+								<li>
+									<label for="order-by-date">
+										<input id="order-by-date" type="radio" />
+										To-do Date
+									</label>
+								</li>
+								<li>
+									<label for="order-by-creation-date">
+										<input id="order-by-creation-date" type="radio" />
+										Creation Date
+									</label>
+								</li>
+							</ul>	
+						</div>
+					</div>	
+					<div class="toggle collapse-expand">
+						<button type="button">
+							<img class="collapse icon" src="./images/prospective-left/toolbars/top-collapse.svg">
+						</button>
+						<button type="button">
+							<img class="expand icon hidden" src="./images/prospective-left/toolbars/top-expand.svg">
+						</button>
+					</div>				
+				</div>
+				<div id="todo-pane">
+					<!-- fake data starts here -->
+					<template id="list-">
+                        <form id="list-form-" action="2did.com/user/todos" method="post">
+                            <input id="list-text-" name="list-1" class="list text expandable" type="text" value="List_Name" readonly/>
+                            <button class="" type="button">
+                                <img class="edit icon" src="./images/prospective-left/edit.svg" />
+                            </button>
+                            <div class="list minibar hidden">
+                                <div class="left">
+                                    <button type="button">
+                                        <img class="add-sublist icon" src="./images/prospective-left/list-dropdown/new-sublist.svg">
+                                    </button>
+                                    <button type="button">
+                                        <img class="view-completed icon" src="./images/prospective-left/list-dropdown/view-completed.svg">
+                                    </button>
+                                </div>
+                                <div class="right">
+                                    <button type="button">
+                                        <img class="archive icon" src="./images/prospective-left/list-dropdown/archive.svg" />
+                                    </button>
+                                    <button type="button">
+                                        <img class="delete icon" src="./images/prospective-left/list-dropdown/delete.svg" />
+                                    </button>
+                                    <button type="button">
+                                        <img class="save icon" src="./images/prospective-left/list-dropdown/save.svg" />
+                                    </button>
+                                </div>								
+                                <div class="new-sublist dropdown hidden">
+                                    <input id="new-sublist-input" name="new-list-input" type="text" placeholder="add a sublist" />
+                                    <button type="button">
+                                        <img class="add sublist icon" src="./images/prospective-left/add.svg" />
+                                    </button>
+                                    <button type="button">
+                                        <img class="no-add sublist icon" src="./images/prospective-left/x.svg" />
+                                    </button>
+                                </div>
+                            </div>
+                        </form> 
+                       
+						<template id="sublist-">
+							<form id="sublist-form-" action="2did.com/user/todos" method="post">
+								<input id="sublist-text-" name="sublist-" class="list text expandable" type="text" value="Sublist_Name" readonly/>	
+								<button type="button">
+									<img class="edit icon" src="./images/prospective-left/edit.svg" />
+								</button>
+								<div class="sublist minibar hidden">
+									<button type="button">
+										<img class="save icon" src="./images/prospective-left/list-dropdown/save.svg" />
+									</button>
+									<button type="button">
+										<img class="archive icon" src="./images/prospective-left/list-dropdown/archive.svg" />
+									</button>
+									<button type="button">
+										<img class="delete icon" src="./images/prospective-left/list-dropdown/delete.svg" />
+									</button>
+								</div>	
+							</form>
+                            <template id="task-">
+                                <form id="task-form-" class="task" action="2did.com/user/todos" method="post">
+                                    <section>
+                                        <div class="task-bar left">
+                                            <div class="first-line">
+                                                <input id="task-checkbox-" name="task-checkbox-" class="task checkbox" type="checkbox" />
+                                                <input id="task-title-" name="task-title-" class="task title" type="text" value="outline functions and use cases" />
+                                                <!-- expand when task title clicked -->
+                                                <div class="task minibar hidden">
+                                                    <button type="button">
+                                                        <img class="save sublist icon" src="./images/prospective-left/save.svg" />
+                                                    </button>
+                                                    <button type="button">
+                                                        <img class="no-add sublist icon" src="./images/prospective-left/x.svg" />
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="second-line">
+                                                <button class="time-tracked tag" type="button">
+                                                    <!-- stopwatch/pomodoro functionality in script.js -->
+                                                    <img class="stopwatch timer indicator" type="button" src="./images/prospective-left/todo-components/time-stopwatch.svg">
+                                                    <img class="pomodoro timer indicator hidden" type="button" src="./images/prospective-left/todo-components/time-pomodoro.svg">
+                                                    <!-- inner text = time tracked from task object -->
+                                                    
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="task-bar right">
+                                            <div class="first-line">
+                                                <!-- when any indicator is clicked,  opens edit view for that property-->
+                                                <button class="reminder indicator" type="button">
+                                                    <img class="reminder indicator" src="./images/prospective-left/todo-components/reminder.svg">
+                                                </button>
+                                                <button class="recurring indicator" type="button">
+                                                    <img class="recurring indicator" src="./images/prospective-left/todo-components/recurring.svg">
+                                                </button>
+                                                <button class="date indicator" type="button">
+                                                    <!-- inner text = date from task object -->
+                                                </button>
+                                                <button class="time indicator" type="button">
+                                                    <!-- inner text = time tracked from task object -->
+                                                </button>
+                                            </div>
+                                            <div class="second-line">
+                                                <button class="project indicator" type="button">
+                                                    <!-- inner text = project-list tracked from task object -->
+                                                </button>
+                                                <button class="note indicator" type="button">
+                                                    <img class="note indicator" src="./images/prospective-left/todo-components/note.svg">
+                                                    <!-- inner text = project-list tracked from task object -->
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </section>
+									<!-- hidden if no sublist -->
+									<section>
+										<div class="toggle collapse">
+											<button class="toggle collapse hidden" type="button"> ˯ </button>
+											<button class="toggle expand" type="button"> ˲ </button>
+										</div>
+										<template id="subtask">
+											<input id="subtask-checkbox-" name="subtask-checkbox-" class="subtask checkbox" type="checkbox" />
+											<input id="subtask-title-" name="subtask-title-" class="subtask title" type="text" value="Subtask_Text" />
+											<div class="subtask minibar hidden">
+												<button type="button">
+													<img class="save sublist icon" src="./images/prospective-left/save.svg" />
+												</button>
+												<button type="button">
+													<img class="no-add sublist icon" src="./images/prospective-left/x.svg" />
+												</button>
+											</div>
+										</template>
+										<div id="new-subtask">
+											<input id="new-subtask-checkbox" name="subtask-checkbox-" class="subtask checkbox" type="checkbox" />
+											<input id="new-subtask-title" name="subtask-title-" class="new-subtask title" type="text" value="+ subtask" />
+											<div class="subtask minibar hidden">
+												<button type="button">
+													<img class="save sublist icon" src="./images/prospective-left/save.svg" />
+												</button>
+												<button type="button">
+													<img class="no-add sublist icon" src="./images/prospective-left/x.svg" />
+												</button>
+											</div>
+										</div>										
+									</section>
+                                    <section class="task dropdown">
+										<div class="edit-component not-active hidden">
+											<button type="button">
+												<img class="date icon" src="./images/prospective-left/todo-components/date.svg">
+											</button>
+											<!-- get date from task object -->
+											<!-- TODO build out -->
+											<input id="task-date-" name="task-date-" class="task date" type="date" value="Date">
+										</div>
+										<div class="edit-component not-active hidden">
+											<button type="button">
+												<img class="recurring icon" src="./images/prospective-left/todo-components/recurring.svg">
+											</button>
+											<!-- TODO build out -->
+											<input id="task-recurring-" name="task-recurring-" class="task recurring" type="text" value="">
+										</div>
+										<div class="edit-component hidden">
+											<div class="reminder first-line">
+												<img class="reminder icon inactive" src="./images/prospective-left/todo-components/reminder.svg">
+												<p>Remind me</p>
+											</div>
+											<div class="dropdown reminder-options hidden">
+												<ul>
+													<li>
+														<label for="day-before-">
+															<input id="day-before-" type="radio" />
+															the day of:
+														</label>
+													</li>
+													<li>
+														<label for="day-of-">
+															<input id="day-of-" type="radio" />
+															the day before: 
+														</label>
+													</li>
+												</ul>	
+											<div class="dropdown day-of reminder-time hidden">
+												<input id="task-reminder-hours-" name="task-reminder-hours-" class="task reminder" type="number" value="">
+												<label for="task-reminder-hours-">Hours</label>
+												<input id="task-reminder-minutes-" name="task-reminder-minutes-" class="task reminder" type="number" value="">
+												<label for="task-reminder-minutes-">Minutes</label>
+											</div>
+											<div class="dropdown day-before reminder-time hidden">
+												<!-- TODO: build out -->
+												 <input id="task-reminder-time-" name="task-reminder-time-" class="task reminder" type="time" value="">
+											</div>
+										</div>
+										<div class="edit-component not-active hidden">
+											<button type="button">
+												<img class="change-list icon" src="./images/prospective-left/todo-components/change-list.svg" />
+											</button>
+											<!-- get names of existing lists for dropdown -->
+										</div>                            
+                                    </section>
+                                </form>
+                            </template>
+							<form id="event-form-" class="event" action="2did.com/user/todos" method="post">
+								<section>
+									<div class="event-bar left">
+										<input id="event-title-" name="event-title-" class="event title" type="text" value="Event_Name" />
+										<div class="task minibar hidden">
+											<button type="button">
+												<img class="save sublist icon" src="./images/prospective-left/save.svg" />
+											</button>
+											<button type="button">
+												<img class="no-add sublist icon" src="./images/prospective-left/x.svg" />
+											</button>
+										</div>
+									</div>
+									<div class="event-bar right">
+										<!-- when any indicator is clicked,  opens edit view for that property-->
+										<button class="reminder indicator" type="button">
+											<img class="reminder indicator" src="./images/prospective-left/todo-components/reminder.svg">
+										</button>
+										<button class="recurring indicator" type="button">
+											<img class="recurring indicator" src="./images/prospective-left/todo-components/recurring.svg">
+										</button>
+										<button class="date indicator" type="button">
+											<!-- inner text = date from task object -->
+										</button>
+										<button class="time indicator" type="button">
+											<!-- inner text = time tracked from task object -->
+										</button>
+									</div>
+								</section>
+								<section class="event dropdown">
+									<div class="edit-component hidden">										
+										<img class="date icon inactive" src="./images/prospective-left/todo-components/date.svg">										
+										<!-- get date from event object -->
+										<input id="event-date-" name="event-date-" class="event date" type="date" value="Date">
+									</div>
+									<div class="edit-component hidden">
+										<img class="recurring icon inactive" src="./images/prospective-left/todo-components/recurring.svg">
+										<input id="event-recurring-" name="event-recurring-" class="event recurring" type="text" value="">
+									</div>
+									<div class="edit-component hidden">
+										<div class="reminder first-line">
+											<img class="reminder icon inactive" src="./images/prospective-left/todo-components/reminder.svg">
+											<p>Remind me</p>
+										</div>
+										<div class="dropdown reminder-options hidden">
+											<fieldset>
+												<ul>
+													<li>
+														<label for="day-before-">
+															<input id="day-before-" type="radio" />
+															the day of:
+														</label>
+													</li>
+													<li>
+														<label for="day-of-">
+															<input id="day-of-" type="radio" />
+															the day before: 
+														</label>
+													</li>
+												</ul>
+											</fieldset>
+										<div class="dropdown day-of reminder-time hidden">
+											<input id="event-reminder-hours-" name="event-reminder-hours-" class="event reminder" type="number" value="">
+											<label for="event-reminder-hours-">Hours</label>
+											<input id="event-reminder-minutes-" name="event-reminder-minutes-" class="event reminder" type="number" value="">
+											<label for="event-reminder-minutes-">Minutes</label>
+										</div>
+										<div class="dropdown day-before reminder-time hidden">
+											<!-- TODO: build out -->
+											 <input id="event-reminder-time-" name="event-reminder-time-" class="event reminder" type="time" value="">
+										</div>
+									</div>
+									<div class="edit-component not-active hidden">
+										<button type="button">
+											<img class="change-list icon" src="./images/prospective-left/todo-components/change-list.svg" />
+										</button>
+										<!-- get names of existing lists for dropdown -->
+									</div>
+								</section>
+							</form>
+						</template>							
+					</template>
+					<div>	
+						<form id="new-list-form" action="2did.com/user/todos" method="post"></form> 
+							<label for="new-list-input">
+								<input id="new-list-input" name="new-list-input" class="list input" type="text"  />
+								<button type="button">
+									<img class="add icon" src="./images/prospective-left/add.svg" />
+								</button>
+							</label>
+						</form>
+					</div>
+				</div>
+				<div class="bottom toolbar">
+
+				</div>
+			</div>
+			<div class="dragbar">
+
+			</div>
+			<div class="right pane">
+
+			</div>
+		</div>
+	</body>
+</html>
