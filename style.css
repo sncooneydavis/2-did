@@ -58,5 +58,9 @@ p {
 	overflow-wrap: break-word;
 	hyphens: auto;
 }
+.hidden {
+	display: none;
+}
 /* ============================================*/
+
 
