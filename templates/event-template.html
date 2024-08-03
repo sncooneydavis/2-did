@@ -1,0 +1,119 @@
+<template id="event">
+    <div id="event-">
+        <div class="event-bar">
+            <div class="event-bar left">
+                <form id="event-form-title-" class="event" action="2did.com/user/todos" method="post">
+                    <input class="first-line event title" id="event-title-" name="event-title" type="text" placeholder="+ event" value="EVENT_TITLE" />
+                    <button class="second-line hidden">
+                        <img class="location indicator" src="./images/prospective-left/todo-components/location.svg" /> 
+                        <span> <!-- GET LOCATION FROM EVENT OBJ --> </span>
+                    </button> 
+                </form>        
+            </div>
+            <div class="event-bar right">
+                <!-- when any indicator is clicked,  opens edit view for that property + save-changes at end -->
+                <!-- all are hidden unless corresponding object property != 'set' --> 
+                <button class="list indicator hidden" type="button">
+                    <!-- hidden when ordered by list or no assigned list -->
+                    <!-- GET LIST FROM EVENT OBJECT -->
+                </button>
+                <button class="reminder indicator hidden" type="button">
+                    <img class="reminder indicator" src="./images/prospective-left/todo-components/reminder.svg" />
+                </button>
+                <button class="recurring indicator hidden" type="button">
+                    <img class="recurring indicator" src="./images/prospective-left/todo-components/recurring.svg" />
+                </button>
+                <button class="date indicator hidden" type="button">
+                    <img class="date indicator" src="./images/prospective-left/todo-components/date.svg" />
+                    <!-- GET DATE_TIME FROM EVENT OBJECT -->
+                </button>
+            </div>
+        </div>
+        <!-- if event has just been created: APPEND EVENT_EDIT TEMPLATE, open all edit dropdowns -->
+        <!-- for each class of task object, if value: APPEND EVENT_EDIT TEMPLATE, make corresponding icon active & open corresponding edit dropdown -->
+    </div>
+</template>
+
+<!-- --------------------------------------------------------------------------------------------------------------- -->
+
+<template id="event-edit">
+    <form id="event-form-details-" class="event" action="2did.com/user/todos" method="post">
+        <!-- when edit-component edited (and has value), make corresponding button active -->
+        <!-- upon save, hide all dropdowns that correspond to an empty event object property -->
+        <section class="edit-component hidden">
+            <div class="single-line">
+                <img class="datetime icon inactive" src="./images/prospective-left/todo-components/date.svg" />
+                <span> <!-- GET DATE_TIME FROM EVENT OBJECT --> </span>
+            </div>                
+            <div class="datetime dropdown">
+                <!-- TODO build out -->
+            </div>
+        </section>
+        <section class="edit-component hidden">
+            <div class="single-line">
+                <img class="location indicator" src="./images/prospective-left/todo-components/location.svg"> 
+                <input id="event-location-" name="event-location" class="event location" type="text" value="EVENT_LOCATION" />
+            </div>
+        </section>
+        <section class="edit-component hidden">
+            <div class="single-line">
+                <img class="recurring icon inactive" src="./images/prospective-left/todo-components/recurring.svg" />
+                <span> <!-- GET RECURRING FROM EVENT OBJECT --> </span>
+            </div>
+            <div class="recurring dropdown">
+                <!-- TODO build out -->
+            </div>
+        </section>
+        <section class="edit-component hidden">
+            <div class="single-line">
+                <img class="reminder icon inactive" src="./images/prospective-left/todo-components/reminder.svg" />
+                <span> <!-- GET REMINDER FROM EVENT OBJECT --> </span>
+            </div>
+            <div class="reminder dropdown">
+                <ul>
+                    <li>
+                        <!-- no bubble -->
+                        <!-- when one selected, make active and hide the other -->
+                        <!-- when selected is clicked, show both and make inactive -->
+                        <label for="day-before-" class="inactive" >
+                            <input id="day-before-" name="reminder-options" type="radio" />
+                            the day of:
+                        </label>
+                    </li>
+                    <li>
+                        <label for="day-of-" class="inactive" >
+                            <input id="day-of-" name="reminder-options" type="radio" />
+                            the day before: 
+                        </label>
+                    </li>
+                </ul>
+                <!-- reveal if "the day of" selected  -->
+                <div class="dropdown day-of hidden">
+                    <input id="event-reminder-hours-" name="event-reminder-hours" class="event reminder" type="number" value="" />
+                    <label for="event-reminder-hours-">Hours</label>
+                    <input id="event-reminder-minutes-" name="event-reminder-minutes" class="event reminder" type="number" value="" />
+                    <label for="event-reminder-minutes-">Minutes</label>
+                </div>
+                <!-- reveal if "the day before" selected -->
+                <div class="dropdown day-before hidden">
+                    <input id="event-reminder-time-" name="event-reminder-time-" class="event reminder" type="time" value="" />
+                </div>
+            </div>
+        </section>
+        <section class="edit-component inactive hidden">
+            <div class="single-line">
+                <img class="change-list icon" src="./images/prospective-left/todo-components/change-list.svg" />
+                <span>
+                    Move to List:
+                </span>
+            </div>
+            <!-- TODO: build out -->
+            <!-- get names of existing lists for dropdown -->
+        </section>
+        <section class="forget-changes hidden">
+            <button type="button">
+                <img class="no-add icon" src="./images/prospective-left/x.svg" />
+            </button>
+        </section>
+    </form>
+</template>

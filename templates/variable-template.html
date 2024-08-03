@@ -1,0 +1,163 @@
+<template id="measurement">
+    <div id="measurement-">
+        <div class="measurement-bar">
+            <div class="measurement-bar left">
+                <!-- hide if new measurement -->
+                <form class="measurement" id="measurement-form-widget-" action="2did.com/user/todos" method="post">
+                    <!-- widget is greyed out by default -->
+                    <!-- widget turns green when goal met -->
+                    <!-- widget turns red if goal not met -->
+                    
+                    <!-- if type=boolean, show after initial save-->
+                    <div class="measurement bool-widget hidden">
+                        <!-- <input class="measurement-boolean" id="measurement-boolean-" name="measurement-boolean" type="checkbox" /> -->
+                    </div>
+                                       
+                    <!-- if type=count, show after initial save-->
+                    <div class="measurement count-widget hidden">
+                        <input class="measurement-count" id="measurement-count-" name="measurement-count" type="number" placeholder="0" />
+                        <!-- when clicked, hide and reveal opposite -->
+                        <button class="hidden" id="decrement-count-" type="button">
+                            -
+                        </button>
+                        <button class="hidden" id="increment-count-" type="button">
+                            +
+                        </button>
+                    </div>
+
+                    <!-- if type=rating, show after initial save-->
+                    <div class="measurement rate-widget hidden">
+                        <input class="measurement-rating" id="measurement-rating-" name="measurement-rating" type="range" list="number-labels" min="1" max="5" />
+                        <datalist id="number-labels">
+                            <option value="1">1</option>
+                            <option value="5">5</option>
+                        </datalist>
+                    </div>
+                </form> 
+                
+                <form class="measurement" id="measurement-form-title-" action="2did.com/user/todos" method="post">
+                    <!-- IF EXISTING measurement, GET VALUE FROM measurement_OBJECT -->
+                    <input class="measurement title" id="measurement-title-" name="measurement-title" type="text" placeholder="+ measurement" value="measurement_TITLE" />
+                </form>        
+            </div>
+            <div class="measurement-bar right hidden">
+                <!-- when any indicator is clicked,  opens edit view for that property + save-changes at end -->
+                <!-- all are hidden unless corresponding object property != 'set' --> 
+                <button class="list indicator hidden" type="button">
+                    <!-- hidden when ordered by list or no assigned list -->
+                    <!-- colored bubble -->
+                    <!-- GET LIST FROM VAR OBJECT -->
+                </button>
+                <button class="goal indicator hidden" type="button">
+                    <img class="goal indicator" src="./images/prospective-left/todo-components/goal.svg">
+                    <!-- GET GOAL FROM measurement OBJECT -->
+                </button>
+                <button class="schedule indicator hidden" type="button">
+                    <img class="schedule indicator" src="./images/prospective-left/todo-components/date.svg">
+                    <!-- GET SCHEDULE FROM measurement OBJECT -->
+                </button>
+            </div>
+        </div>
+        <!-- if measurement has just been created: APPEND measurement_EDIT TEMPLATE, open all edit dropdowns -->
+        <!-- for each class of measurement object, if value: APPEND measurement_EDIT TEMPLATE, make corresponding icon active & open corresponding edit dropdown -->
+    </div>
+</template>
+
+<!-- --------------------------------------------------------------------------------------------------------------- -->
+
+<template id="measurement-edit">
+    <!-- when edit-component edited (and has value), make corresponding icon in measurement-bar active -->
+    <!-- upon save, hide all dropdowns that correspond to an empty measurement object property -->
+    <form id="measurement-form-details-" class="measurement" action="2did.com/user/todos" method="post">       
+        <!-- show only if new measurement or on form-title click -->
+        <section class="edit-component hidden">
+            <div id="varible-icons-options">
+                <!-- will dynamically generate icons listed in "./images/measurement-icons" -->
+            </div>
+        </section>
+        <section class="edit-component hidden">
+            <div id="measurement-type-">
+                <ul>Measurement Type:
+                    <li>
+                        <label for="measurement-type-boolean-">
+                            <input id="measurement-type-boolean-" name="measurement-type" type="radio" required />
+                            Boolean
+                        </label>
+                    </li>
+                    <li>
+                        <label for="measurement-type-count-">
+                            <input id="measurement-type-count-" name="measurement-type" type="radio" required />
+                            Count
+                        </label>
+                    </li>
+                    <li>
+                        <label for="measurement-type-rating-">
+                            <input id="measurement-type-rating-" name="measurement-type" type="radio" required />
+                            Rating
+                        </label>
+                    </li>
+                    <!-- TODO LATER: TIMED GOAL -->
+                </ul>
+            </div>
+        </section>
+        <section class="edit-component hidden">
+            <div class="single-line">
+                <img class="goal icon inactive" src="./images/prospective-left/todo-components/goal.svg" />
+                <span> <!-- GET GOAL FROM VAR OBJECT AS TEXT --> </span>
+            </div>
+            <div class="goal dropdown hidden">
+                <label for="completion-rate-">Completion Goal:</label>
+                <input id="completion-rate-" name="completion-rate" type="number">
+                <span>times</span>
+                <ul>
+                    <li>
+                        <label for="goal-period-day-">
+                            <input id="goal-period-day-" name="goal-period" type="radio" />
+                            daily
+                        </label>
+                    </li>
+                    <li>
+                        <label for="goal-period-weekday-">
+                            <input id="goal-period-weekday-" name="goal-period" type="radio" />
+                            weekly
+                        </label>
+                    </li>
+                    <li>
+                        <label for="goal-period-month-">
+                            <input id="goal-period-month-" name="goal-period" type="radio" />
+                            monthly
+                        </label>
+                    </li>
+                </ul>    
+            </div>
+        </section>
+        <section class="edit-component hidden">
+            <div class="single-line">
+                <img class="reminder icon inactive" src="./images/prospective-left/todo-components/reminder.svg" />
+                <span>Reminder</span> 
+                <input class="add-reminder" id="task-reminder-time-" name="task-reminder-time-" type="time" value="" />   
+                <div class="reminder">
+                    <!-- APPEND REMINDER LIST FROM VAR OBJECT -->
+                    <button type="button">
+                        <img class="no-add icon" src="./images/prospective-left/x.svg" />
+                    </button>
+                </div>
+            </div>
+        </section>
+        <section class="edit-component inactive hidden">
+            <div class="single-line">
+                <img class="change-list icon" src="./images/prospective-left/todo-components/change-list.svg" />
+                <span>
+                    Move to List:
+                </span>
+            </div>
+            <!-- TODO: build out -->
+            <!-- get names of existing lists for dropdown -->
+        </section>
+        <section class="forget-changes hidden">
+            <button type="button">
+                <img class="no-add icon" src="./images/prospective-left/x.svg" />
+            </button>
+        </section>
+    </form>
+</template>

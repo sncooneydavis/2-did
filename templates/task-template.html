@@ -1,0 +1,162 @@
+<template id="task">
+    <div id="task-">
+        <div class="task-bar">
+            <div class="task-bar left">
+                <div class="first-line">
+                    <!-- hide if no timing functionality or if new task -->
+                    <!-- send form upon every start and stop -->
+                    <form class="task hidden" id="task-form-title-" action="2did.com/user/todos" method="post">
+                        <button class="time-tracked tag" type="button">												
+                            <!-- stopwatch/pomodoro functionality in script.js -->
+                            <!-- when clicked, start timer -->
+                            <img class="stopwatch timer indicator" type="button" src="./images/prospective-left/todo-components/time-stopwatch.svg">
+                            <img class="pomodoro timer indicator hidden" type="button" src="./images/prospective-left/todo-components/time-pomodoro.svg">
+                            <span class="">
+                                <!-- GET TIME_TRACKED FROM TASK OBJ -->
+                                <!-- becomes count-up when timer is active-->
+                            </span>
+                        </button>
+                        <input class="task checkbox" id="task-checkbox-" name="task-checkbox" type="checkbox" />
+                    </form>
+                    <form class="task" id="task-form-title-" action="2did.com/user/todos" method="post">
+                        <!-- hide if there is timing functionality and if not new task -->
+                        <input class="task checkbox" id="task-checkbox-" name="task-checkbox" type="checkbox" />
+                        <!-- when title clicked, expands all active dropdowns -->
+                        <input id="task-title-" name="task-title" class="task title" placeholder="+ task" type="text" value="TASK_TITLE" />
+                    </form>
+                    <!-- reveal if subtasks present -->
+                    <div class="toggle subtasks hidden">
+                        <button class="toggle collapse" type="button"> ˯ </button>
+                        <button class="toggle expand hidden" type="button"> ˲ </button>
+                    </div>
+                </div>
+                <div class="second-line">
+                   
+                </div>
+            </div>
+            <div class="task-bar right">
+                <!-- when any indicator is clicked,  opens edit view for that property and save-changes at end -->
+                <!-- all are hidden unless corresponding object property != 'set' -->
+                <button class="list indicator hidden" type="button">
+                    <!-- GET LIST FROM TASK OBJ -->
+                    <!-- hidden when ordered by list -->
+                </button>
+                <button class="reminder indicator hidden" type="button">
+                    <img class="reminder indicator" src="./images/prospective-left/todo-components/reminder.svg" />
+                </button>
+                <button class="recurring indicator hidden" type="button">
+                    <img class="recurring indicator" src="./images/prospective-left/todo-components/recurring.svg" />
+                </button>
+                <button class="date indicator hidden" type="button">
+                    <img class="date indicator" src="./images/prospective-left/todo-components/date.svg" />
+                    <!-- GET DATE_TIME FROM TASK OBJ -->
+                </button>
+            </div>
+        </div>    
+        <div class="subtasks container">
+            <div class="subtasks list">
+            <!-- APPEND SUBTASKS TEMPLATES HERE -->								
+                <form id="task-form-new-subtask" class="task" action="2did.com/user/todos" method="post">
+                    <input id="new-subtask-title" name="new-subtask-title" class="subtask title" type="text" placeholder="+ subtask" value="" />
+                    <!-- UPON ENTER, SEND SUBTASK_TEMPLATE WITH INPUTTED NAME TO APPEND TO TASK OBJECT -->
+                    <!-- APPEND NEW SUBTASK AT END OF SUBTASKS LIST -->
+                </form>
+            </div>										
+        </div>
+        <!-- if task has just been created: APPEND TASK_EDIT TEMPLATE, open all edit dropdowns -->
+        <!-- for each class of task object, if value: APPEND TASK_EDIT TEMPLATE, make corresponding icon active & open corresponding edit dropdown -->
+    </div>
+</template>
+
+<!-- --------------------------------------------------------------------------------------------------------------- -->
+
+<template id="task-edit">
+    <form id="task-form-details-" class="task" action="2did.com/user/todos" method="post">
+        <!-- when edit-component edited (and has value), make corresponding icon active -->
+        <!-- upon save, hide all dropdowns that correspond to an empty task object property -->
+        <section class="edit-component hidden">
+            <div class="single-line">
+                <img class="datetime icon inactive" src="./images/prospective-left/todo-components/date.svg" />
+                <span> <!-- GET DATE_TIME FROM TASK OBJECT --> </span>
+            </div>
+            <div class="datetime dropdown">
+                <!-- TODO build out -->
+            </div>
+        </section>
+        <section class="edit-component hidden">
+            <div class="single-line">
+                <img class="recurring icon inactive" src="./images/prospective-left/todo-components/recurring.svg" />
+                <span> <!-- GET RECURRING FROM TASK OBJECT --> </span>
+            </div>
+            <div class="recurring dropdown">
+                <!-- TODO build out -->
+            </div>
+        </section>
+        <section class="edit-component hidden">
+            <div class="single-line">
+                <img class="reminder icon inactive" src="./images/prospective-left/todo-components/reminder.svg" />
+                <span><!-- GET REMINDER FROM TASK OBJECT --></span>
+            </div>
+            <div class="reminder dropdown">
+                <ul>
+                    <li>
+                        <!-- no bubble -->
+                        <!-- when one selected, make active and hide the other -->
+                        <!-- when selected is clicked, show both and make inactive -->
+                        <label for="day-before-" class="inactive" >
+                            <input id="day-before-" name="reminder-options" type="radio" />
+                            the day of:
+                        </label>
+                    </li>
+                    <li>
+                        <label for="day-of-" class="inactive" >
+                            <input id="day-of-" name="reminder-options" type="radio" />
+                            the day before: 
+                        </label>
+                    </li>
+                </ul>
+                <!-- reveal if "the day of" selected  -->
+                <div class="dropdown day-of hidden">
+                    <input id="task-reminder-hours-" name="task-reminder-hours" class="task reminder" type="number" value="" />
+                    <label for="task-reminder-hours-">Hours</label>
+                    <input id="task-reminder-minutes-" name="task-reminder-minutes" class="task reminder" type="number" value="" />
+                    <label for="task-reminder-minutes-">Minutes</label>
+                </div>
+                <!-- reveal if "the day before" selected -->
+                <div class="dropdown day-before hidden">
+                    <input id="task-reminder-time-" name="task-reminder-time-" class="task reminder" type="time" value="" />
+                </div>
+            </div>
+        </section>
+        <section class="edit-component inactive hidden">
+            <div class="single-line">
+                <img class="change-list icon" src="./images/prospective-left/todo-components/change-list.svg" />
+                <span>
+                    Move to List:
+                </span>
+            </div>
+            <!-- TODO: build out -->
+            <!-- get names of existing lists for dropdown -->
+        </section> 
+        <section class="forget-changes hidden">
+            <button type="button">
+                <img class="no-add icon" src="./images/prospective-left/x.svg" />
+            </button>
+        </section>                           
+    </form>
+</template>
+
+<!-- --------------------------------------------------------------------------------------------------------------- -->
+
+<template id="subtask">
+    <form id="subtask-form-" action="2did.com/user/tasks" method="post">
+        <div class="single-line">
+            <input id="subtask-checkbox-" name="subtask-checkbox" class="subtask checkbox" type="checkbox" />
+            <input id="subtask-title-" name="subtask-title" class="subtask title" type="text" value="SUBTASK_TITLE" />
+            <!-- reveal when subtask edited -->
+            <button class="hidden" type="button">
+                <img class="no-add sublist icon" src="./images/prospective-left/x.svg" />
+            </button>
+        </div>
+    </form>
+</template>

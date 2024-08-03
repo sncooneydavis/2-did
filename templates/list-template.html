@@ -1,0 +1,68 @@
+<template id="list">
+    <div id="list-">
+        <form id="list-form-" action="2did.com/user/todos" method="post">
+            <!-- switch between on click -->
+            <button class="toggle collapse hidden" type="button"> ˯ </button>
+            <button class="toggle expand" type="button"> ˲ </button>
+            <input id="list-title-" name="list-title" class="list text expandable" type="text" value="LIST_TITLE" readonly/>
+            <!-- show edit button on hover of name-->
+            <button class="hidden" type="button">
+                <img class="edit icon" src="./images/prospective-left/edit.svg" />
+            </button>
+            <div class="list minibar hidden">
+                <div class="left">
+                    <button type="button">
+                        <img class="view-completed icon" src="./images/prospective-left/list-dropdown/view-completed.svg">
+                    </button>
+                </div>
+                <div class="right">
+                    <button type="button">
+                        <img class="archive icon" src="./images/prospective-left/list-dropdown/archive.svg" />
+                    </button>
+                    <button type="button">
+                        <img class="delete icon" src="./images/prospective-left/list-dropdown/delete.svg" />
+                    </button>
+                </div>								
+                <div class="new-sublist">
+                    <input id="new-sublist-title" name="new-sublist-title" type="text" placeholder="+ sublist" />
+                    <button type="button">
+                        <img class="add icon" src="./images/prospective-left/add.svg" />
+                    </button>
+                    <button type="button">
+                        <img class="no-add icon" src="./images/prospective-left/x.svg" />
+                    </button>
+                </div>
+            </div>
+        </form>
+        <!-- APPEND SUB LIST OR TASK/EVENT HERE -->
+        <!-- APPEND NEW_TO_DO TEMPLATE HERE -->
+    </div>
+</template>
+
+<!-- --------------------------------------------------------------------------------------------------------------- -->
+
+<template id="sublist">
+    <div id="sublist-">
+        <form id="sublist-form-" action="2did.com/user/lists" method="post">
+            <!-- switch between on click -->
+            <button class="toggle collapse hidden" type="button"> ˯ </button>
+            <button class="toggle expand" type="button"> ˲ </button>
+            <input id="sublist-title-" name="sublist" class="list title expandable" type="text" value="Sublist_Name" readonly/>	
+            <!-- show edit button on hover of name-->
+            <button class="hidden" type="button">
+                <img class="edit icon" src="./images/prospective-left/edit.svg" />
+            </button>
+            <!-- show on click -->
+            <div class="sublist minibar hidden">
+                <button type="button">
+                    <img class="archive icon" src="./images/prospective-left/list-dropdown/archive.svg" />
+                </button>
+                <button type="button">
+                    <img class="delete icon" src="./images/prospective-left/list-dropdown/delete.svg" />
+                </button>
+            </div>	
+        </form>
+        <!-- APPEND TASK/EVENT TEMPLATE HERE -->
+        <!-- APPEND NEW_TO_DO TEMPLATE HERE -->
+    </div>
+</template>
