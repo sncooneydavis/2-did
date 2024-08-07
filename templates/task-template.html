@@ -1,45 +1,36 @@
 <template id="task">
     <div id="task-">
         <div class="task-bar">
-            <div class="task-bar left">
-                <div class="first-line">
-                    <!-- hide if no timing functionality or if new task -->
-                    <!-- send form upon every start and stop -->
-                    <form class="task hidden" id="task-form-title-" action="2did.com/user/todos" method="post">
-                        <button class="time-tracked tag" type="button">												
-                            <!-- stopwatch/pomodoro functionality in script.js -->
-                            <!-- when clicked, start timer -->
-                            <img class="stopwatch timer indicator" type="button" src="./images/prospective-left/todo-components/time-stopwatch.svg">
-                            <img class="pomodoro timer indicator hidden" type="button" src="./images/prospective-left/todo-components/time-pomodoro.svg">
-                            <span class="">
-                                <!-- GET TIME_TRACKED FROM TASK OBJ -->
-                                <!-- becomes count-up when timer is active-->
-                            </span>
-                        </button>
-                        <input class="task checkbox" id="task-checkbox-" name="task-checkbox" type="checkbox" />
-                    </form>
-                    <form class="task" id="task-form-title-" action="2did.com/user/todos" method="post">
-                        <!-- hide if there is timing functionality and if not new task -->
-                        <input class="task checkbox" id="task-checkbox-" name="task-checkbox" type="checkbox" />
-                        <!-- when title clicked, expands all active dropdowns -->
-                        <input id="task-title-" name="task-title" class="task title" placeholder="+ task" type="text" value="TASK_TITLE" />
-                    </form>
+            <div class="left">
+                <form class="task" id="task-form-title-" action="2did.com/user/todos" method="post"></form>
+                    <!-- hide if there is timing functionality and if not new task -->
+                    <input class="task checkbox" id="task-checkbox-" name="task-checkbox" type="checkbox" />
+                    <!-- when title clicked, expands all ~empty dropdowns -->
+                    <input id="task-title-" name="task-title" class="task title" placeholder="+ task" type="text" value="TASK_TITLE" />
                     <!-- reveal if subtasks present -->
                     <div class="toggle subtasks hidden">
                         <button class="toggle collapse" type="button"> ˯ </button>
                         <button class="toggle expand hidden" type="button"> ˲ </button>
                     </div>
-                </div>
-                <div class="second-line">
-                   
-                </div>
+                </form>
+                <!-- hide if no timing functionality or if new task -->
+                <!-- send form upon every start and stop -->
+                <form class="task hidden single-line" id="task-form-timer-" action="2did.com/user/todos" method="post">
+                    <button class="time-tracked tag" type="button">												
+                        <!-- stopwatch functionality in script.js -->
+                        <!-- when clicked, start timer -->
+                        <img class="stopwatch timer indicator" type="button" src="./images/prospective-left/todo-components/time-stopwatch.svg">
+                        <span class="">
+                            <!-- GET TIME_TRACKED FROM TASK OBJ -->
+                            <!-- becomes count-up when timer is ~empty -->
+                        </span>
+                    </button>
+                </form>
             </div>
-            <div class="task-bar right">
-                <!-- when any indicator is clicked,  opens edit view for that property and save-changes at end -->
-                <!-- all are hidden unless corresponding object property != 'set' -->
+            <div class="right">
+                <!-- hidden when ordered by list -->
                 <button class="list indicator hidden" type="button">
                     <!-- GET LIST FROM TASK OBJ -->
-                    <!-- hidden when ordered by list -->
                 </button>
                 <button class="reminder indicator hidden" type="button">
                     <img class="reminder indicator" src="./images/prospective-left/todo-components/reminder.svg" />
@@ -48,8 +39,12 @@
                     <img class="recurring indicator" src="./images/prospective-left/todo-components/recurring.svg" />
                 </button>
                 <button class="date indicator hidden" type="button">
-                    <img class="date indicator" src="./images/prospective-left/todo-components/date.svg" />
-                    <!-- GET DATE_TIME FROM TASK OBJ -->
+                    <!-- if due-date available, do not hide: -->
+                    <img class="due date indicator" src="./images/prospective-left/todo-components/due-date.svg" />
+                    <!-- if due-date not available, but start-date available: do not hide: -->
+                    <img class="start date indicator hide" src="./images/prospective-left/todo-components/due-date.svg" />
+                    <!-- GET DUE_DATE FROM EVENT OBJECT if available, if not GET START_DATE -->
+                    <!-- GET DUE_TIME FROM EVENT OBJECT if available, if not GET START_TIME -->
                 </button>
             </div>
         </div>    
@@ -63,54 +58,231 @@
                 </form>
             </div>										
         </div>
-        <!-- if task has just been created: APPEND TASK_EDIT TEMPLATE, open all edit dropdowns -->
-        <!-- for each class of task object, if value: APPEND TASK_EDIT TEMPLATE, make corresponding icon active & open corresponding edit dropdown -->
+        <!-- if task has just been created: APPEND TASK_EDIT_NEW TEMPLATE IN CONTAINER -->
+            <!-- upon save/send, REMOVE CONTAINER -->
+        <!-- on click of indicator for property X: APPEND TASK_EDIT_EXISTING IN CONTAINER WITH X_EDIT OPEN-->
+            <!-- all indicators corresponding to valued properties are ~empty -->
+            <!-- upon save/send, REMOVE CONTAINER -->
     </div>
 </template>
 
 <!-- --------------------------------------------------------------------------------------------------------------- -->
 
-<template id="task-edit">
-    <form id="task-form-details-" class="task" action="2did.com/user/todos" method="post">
-        <!-- when edit-component edited (and has value), make corresponding icon active -->
-        <!-- upon save, hide all dropdowns that correspond to an empty task object property -->
-        <section class="edit-component hidden">
-            <div class="single-line">
-                <img class="datetime icon inactive" src="./images/prospective-left/todo-components/date.svg" />
-                <span> <!-- GET DATE_TIME FROM TASK OBJECT --> </span>
+<template id="task-edit-new">
+    <form id="task-form-details" class="task" action="2did.com/user/todos" method="post">
+        <!-- on click for collapsed component or dropdown, expands. values are held until submit -->
+        <!-- on click for opened component or dropdown, collapses. -->
+        <!-- when component edited (and has value), remove 'empty' class from corresponding icon -->
+        <section id="schedule" class="edit-component">
+            <button class="dropdown-button" type="button">
+                <img class="date icon empty" src="./images/prospective-left/todo-components/date.svg" />
+                Start:
+                <div>
+                    <!-- when date selected from dropdown, populate schedule-date input's value -->
+                    <input id="schedule-date" type="text" value="" readonly />
+                    <!-- if time selected, ~hidden and populate with schedule-time input's value -->
+                    <!-- if timer option selected, ~hidden and populate with "timed task" -->
+                    <input class="hidden" id="schedule-time" type="text" value="" readonly />
+                </div>               
+            </button>
+            <!-- SCRIPT: get now's year/month/day and make default 'selected' -->
+            <div class="date dropdown">
+                <div class="calendar">
+                    <div class="single-line">
+                        <select id="schedule-date-month" name="schedule-start-month">
+                            <option value="01" selected>January</option>
+                            <option value="02">February</option>
+                            <option value="03">March</option>
+                            <option value="04">April</option>
+                            <option value="05">May</option>
+                            <option value="06">June</option>
+                            <option value="07">July</option>
+                            <option value="08">August</option>
+                            <option value="09">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                        <select id="schedule-date-year" name="schedule-start-year">
+                            <!-- SCRIPT: current year + 10 years in future -->
+                        </select>
+                    </div>
+                    <!-- on click, select day if not selected and deselect previously selected day -->
+                    <div id="schedule-date-names"> <!-- populate with js --> </div>
+                    <div id="schedule-date-numbers"> <!-- populate with CSS grid --> </div> 
+                </div> 
             </div>
-            <div class="datetime dropdown">
-                <!-- TODO build out -->
-            </div>
+            <div class="time dropdown">
+                <div class="time-type">
+                    <!-- bubbles -->
+                    <label for="time-type-set">
+                        <input id="time-type-set" name="scheduled-time-type" value="set-time" type="radio" />
+                        Set Time
+                    </label>
+                    <label for="time-type-timer">
+                        <input id="time-type-timer" name="scheduled-time-type" value="timer" type="radio" />
+                        Record Time
+                    </label>
+                    <label for="time-type-no">
+                        <input id="time-type-no" name="scheduled-time-type" value="no-time" type="radio" />
+                        No Time
+                    </label>
+                </div>
+                <!-- ~hidden if time-type:set -->
+                <div class="time-set hidden">
+                    <!-- SCRIPT: set default value as first whole-number time from DAY OBJECT that has a free hour  -->
+                    <!-- set default value as one hour from start time -->
+                    <!-- set min as 15 minutes from start time -->
+                    <label for="schedule-time-start">
+                        Start Time: <input id="schedule-time-start" name="schedule-time-start" class="time start" type="time" step="300" value="" />
+                    </label>
+                    <label for="schedule-time-end">
+                        End Time: <input id="schedule-time-end" name="schedule-time-end" class="time end" type="time" min="" step="300" value="" />
+                    </label> 
+                </div>          
+            </div>                           
         </section>
-        <section class="edit-component hidden">
-            <div class="single-line">
-                <img class="recurring icon inactive" src="./images/prospective-left/todo-components/recurring.svg" />
-                <span> <!-- GET RECURRING FROM TASK OBJECT --> </span>
+        <section id="due" class="edit-component">
+            <button class="dropdown-button" type="button">
+                <img class="due-date icon empty" src="./images/prospective-left/todo-components/due-date.svg" />
+                <div>
+                    Due:
+                    <!-- when date selected from dropdown, populate due-date input's value -->
+                    <input id="due-date" type="text" value="" readonly />
+                    <!-- if time selected, ~hidden and populate with due-time input's value -->
+                    <!-- if timer option selected, ~hidden and populate with "timed task" -->
+                    <input class="hidden" id="due-time" type="text" value="" readonly />
+                </div>               
+            </button>
+            <!-- SCRIPT: get now's year/month/day and make default 'selected' -->
+            <div class="date dropdown">
+                <div class="single-line">
+                    <select id="due-date-month" name="due-start-month">
+                        <option value="01" selected>January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                    <select id="due-date-year" name="due-start-year">
+                        <!-- SCRIPT: current year + 10 years in future -->
+                    </select>
+                </div>
+                <!-- on click, select day if not selected and deselect previously selected day -->
+                <div id="due-date-names"> <!-- populate with js --> </div>
+                <div id="due-date-numbers"> <!-- populate with CSS grid --> </div>  
             </div>
+            <button class="dropdown-button" type="button">
+                Set Time
+            </button>
+            <!-- ~hidden on dropdown-button click -->
+            <div class="set-time dropdown hidden">
+                <!-- SCRIPT: set default value as first whole-number time from DAY OBJECT that has a free hour  -->
+                <!-- set default value as one hour from start time -->
+                <!-- set min as 15 minutes from start time -->
+                <label for="due-time-start">
+                    Start Time: <input id="due-time-start" name="due-time-start" class="time start" type="time" step="300" value="" />
+                </label>
+                <label for="due-time-end">
+                    End Time: <input id="due-time-end" name="due-time-end" class="time end" type="time" min="" step="300" value="" />
+                </label>      
+            </div>   
+        </section>
+        <section id="recurring" class="edit-component">
+            <button class="dropdown-button" type="button">
+                <img class="recurring icon empty" src="./images/prospective-left/todo-components/recurring.svg" />
+                Recurrence:
+                <div>
+                    <!-- populate with combined values of recurring-dropdown inputs -->
+                    <input id="recurring-description" type="text" value="" readonly />
+                </div>               
+            </button>
             <div class="recurring dropdown">
-                <!-- TODO build out -->
+                <div class="single-line">
+                    <span>Following </span>
+                    <!-- add 'disabled' attribute to `task-completion` if DUE_DATE set above-->
+                    <select id="recurring-following-options" name="recurring-following">
+                        <option value="task-scheduled-date" selected>the task schedule, </option>
+                        <option value="task-completion">task completion, </option>
+                    </select>
+                </div>
+                <div class="single-line">
+                    <span>repeat </span>
+                    <select id="recurring-first-options" name="recurring-on">
+                        <optgroup>
+                            <option value="daily" selected>daily.</option>
+                            <option value="weekly">weekly </option>
+                            <option value="monthly">monthly </option>
+                            <option value="yearly">yearly </option>
+                        </optgroup>
+                        <optgroup>
+                            <option value="every">every</option>
+                            <option value="on">on</option>
+                        </optgroup>    
+                    </select>
+                </div>
+                <!-- SCRIPT: ~hidden if recurring-first-options:weekly selected -->
+                <!-- add 'checked' attribute to day name of start-date if available, due-date if not -->
+                <div class="recurring-week dropdown hidden">
+                    <span>on</span>
+                    <label for="">
+                        <input id="on-mondays" name="weekly-on" value="mondays" type="checkbox" />
+                        Mondays
+                    </label>
+                    <label for="">
+                        <input id="on-tuesdays" name="weekly-on" value="tuesdays" type="checkbox" />
+                        Tuesdays
+                    </label>
+                    <label for="">
+                        <input id="on-wednesdays" name="weekly-on" value="wednesdays" type="checkbox" />
+                        Wednesdays
+                    </label>
+                    <label for="">
+                        <input id="on-thursdays" name="weekly-on" value="thursdays" type="checkbox" />
+                        Thursdays
+                    </label>
+                    <label for="">
+                        <input id="on-fridays" name="weekly-on" value="fridays" type="checkbox" />
+                        Fridays
+                    </label>
+                    <label for="">
+                        <input id="on-saturdays" name="weekly-on" value="saturdays" type="checkbox" />
+                        Saturdays
+                    </label>
+                    <label for="">
+                        <input id="on-sundays" name="weekly-on" value="sundays" type="checkbox" />
+                        Sundays
+                    </label>
+                </div>
+
             </div>
         </section>
         <section class="edit-component hidden">
             <div class="single-line">
-                <img class="reminder icon inactive" src="./images/prospective-left/todo-components/reminder.svg" />
+                <img class="reminder icon empty" src="./images/prospective-left/todo-components/reminder.svg" />
                 <span><!-- GET REMINDER FROM TASK OBJECT --></span>
             </div>
             <div class="reminder dropdown">
                 <ul>
                     <li>
                         <!-- no bubble -->
-                        <!-- when one selected, make active and hide the other -->
-                        <!-- when selected is clicked, show both and make inactive -->
-                        <label for="day-before-" class="inactive" >
-                            <input id="day-before-" name="reminder-options" type="radio" />
+                        <!-- when one selected, make ~empty and hide the other -->
+                        <!-- when selected is clicked, show both and remove 'empty' class -->
+                        <label for="day-before-" class="empty" >
+                            <input id="day-before-" name="reminder-options" value="day-of" type="radio" />
                             the day of:
                         </label>
                     </li>
                     <li>
-                        <label for="day-of-" class="inactive" >
-                            <input id="day-of-" name="reminder-options" type="radio" />
+                        <label for="day-of-" class="empty" >
+                            <input id="day-of-" name="reminder-options" value="day-before" type="radio" />
                             the day before: 
                         </label>
                     </li>
@@ -128,7 +300,7 @@
                 </div>
             </div>
         </section>
-        <section class="edit-component inactive hidden">
+        <section class="edit-component empty hidden">
             <div class="single-line">
                 <img class="change-list icon" src="./images/prospective-left/todo-components/change-list.svg" />
                 <span>
@@ -147,6 +319,11 @@
 </template>
 
 <!-- --------------------------------------------------------------------------------------------------------------- -->
+<template id="task-edit-existing">
+
+</template>
+
+<!-- --------------------------------------------------------------------------------------------------------------- -->
 
 <template id="subtask">
     <form id="subtask-form-" action="2did.com/user/tasks" method="post">
@@ -160,3 +337,6 @@
         </div>
     </form>
 </template>
+
+<!-- --------------------------------------------------------------------------------------------------------------- -->
+

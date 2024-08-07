@@ -4,7 +4,7 @@
             <div class="event-bar left">
                 <form id="event-form-title-" class="event" action="2did.com/user/todos" method="post">
                     <input class="first-line event title" id="event-title-" name="event-title" type="text" placeholder="+ event" value="EVENT_TITLE" />
-                    <button class="second-line hidden">
+                    <button class="second-line hidden" type="button">
                         <img class="location indicator" src="./images/prospective-left/todo-components/location.svg" /> 
                         <span> <!-- GET LOCATION FROM EVENT OBJ --> </span>
                     </button> 
@@ -25,7 +25,8 @@
                 </button>
                 <button class="date indicator hidden" type="button">
                     <img class="date indicator" src="./images/prospective-left/todo-components/date.svg" />
-                    <!-- GET DATE_TIME FROM EVENT OBJECT -->
+                    <!-- GET DATE FROM EVENT OBJECT -->
+                    <!-- GET TIME FROM EVENT OBJECT -->
                 </button>
             </div>
         </div>
@@ -42,11 +43,32 @@
         <!-- upon save, hide all dropdowns that correspond to an empty event object property -->
         <section class="edit-component hidden">
             <div class="single-line">
-                <img class="datetime icon inactive" src="./images/prospective-left/todo-components/date.svg" />
-                <span> <!-- GET DATE_TIME FROM EVENT OBJECT --> </span>
+                <img class="date icon inactive" src="./images/prospective-left/todo-components/date.svg" />
+                <!-- hide if date:inactive (no date set) -->
+                <span class=""> <!-- GET DATE FROM EVENT OBJECT --> </span>
+                <!-- hide if date:active (date set) -->
+                <span class="hidden">no date set</span>
             </div>                
-            <div class="datetime dropdown">
+            <div class="date dropdown">
                 <!-- TODO build out -->
+            </div>
+        </section>
+        <section class="edit-component hidden">
+            <div class="single-line">
+                <img class="time icon inactive" src="./images/prospective-left/todo-components/time-set.svg" />
+                <!-- hide if time:inactive (no time set) -->
+                <span class=""> <!-- GET TIME FROM EVENT OBJECT --> </span>
+                <!-- hide if time:active (time set) -->
+                <span class="hidden">all day event</span>
+            </div>                
+            <div class="time dropdown">
+                <div class="dropdown scheduled-time hidden">
+                    <!-- on click, default value set as first whole-number time from DAY OBJECT that has a free hour  -->
+                    <input id="scheduled-time-start-" name="scheduled-time-start" class="scheduled-time-start" type="time" step="300" value="" />
+                    <!-- set default value as one hour from start time -->
+                    <!-- set min as 15 minutes from start time -->
+                    <input id="scheduled-time-end-" name="scheduled-time-end" class="scheduled-time-end" type="time" min="" step="300" value="" />
+                </div>
             </div>
         </section>
         <section class="edit-component hidden">

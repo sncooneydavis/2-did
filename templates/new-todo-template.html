@@ -1,5 +1,5 @@
 <template id="new-todo">	
-    <form id="new-todo-form-" action="2did.com/user/todos" method="post">
+    <form id="new-todo-title-" action="2did.com/user/todos" method="post">
         <!-- show on click -->
         <div class="single-line">
             <input id="todo-title-" name="todo-title" type="text" />
@@ -7,18 +7,29 @@
                 <img class="no-add icon" src="./images/prospective-left/x.svg" />
             </button>
         </div>
-        <div class="submit-todo">
+        <div id="new-todo-type-only" class="submit-todo">
+            <p>
+                Add As:
+            </p>
             <button id="add-as-task" type="button">
-                Add as Task
+                <img class="task icon" src="./images/prospective-left/todo-components/task.svg" />
+                Task
             </button>
             <button id="add-as-event" type="button">
-                Add as Event
+                <img class="event icon" src="./images/prospective-left/todo-components/date.svg" />
+                Event
             </button>
-            <button id="add-as-measurement" type="button">
-                Add as Measurement
+            <button id="add-as-variable" type="button">
+                <img class="variable icon" src="./images/prospective-left/todo-components/variable.svg" />
+                Variable
+            </button>
+            <button id="add-as-routine" type="button">
+                <img class="routine icon" src="./images/prospective-left/todo-components/recurring.svg" />
+                Routine
             </button>
         </div>
-        <!-- upon submit, render TASK_TEMPLATE, EVENT_TEMPLATE, or MEASUREMENT_TEMPLATE with todo-title before this template instance -->
+        <!-- on click, render TASK_TEMPLATE, EVENT_TEMPLATE, VARIABLE_TEMPLATE or ROUTINE_TEMPLATE with todo-title before this template instance -->
         <!-- if this template is not at the end of a list, delete it from the DOM -->
     </form>
 </template>
+

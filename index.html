@@ -23,18 +23,29 @@
 						<img class="search icon" src="./images/prospective-left/toolbars/utility-bar-search.svg" />
 						<img class="add icon hidden" src="./images/prospective-left/add.svg" />
 					</div>
-					<!-- if adding a todo, reveal -->
-					<div class="submit-todo dropdown hidden">
+					<!-- reveal on click -->
+					<div class="submit-todo hidden">
+						<p>
+							Add As:
+						</p>
 						<button id="add-as-task" type="button">
-							Add as Task
+							<img class="task icon" src="./images/prospective-left/todo-components/task.svg" />
+							Task
 						</button>
 						<button id="add-as-event" type="button">
-							Add as Event
+							<img class="event icon" src="./images/prospective-left/todo-components/date.svg" />
+							Event
 						</button>
-						<button id="add-as-measurement" type="button">
-							Add as Measurement
+						<button id="add-as-variable" type="button">
+							<img class="variable icon" src="./images/prospective-left/todo-components/variable.svg" />
+							Variable
+						</button>
+						<button id="add-as-routine" type="button">
+							<img class="routine icon" src="./images/prospective-left/todo-components/recurring.svg" />
+							Routine
 						</button>
 					</div>
+					<!-- on click, render TASK_TEMPLATE, EVENT_TEMPLATE, VARIABLE_TEMPLATE or ROUTINE_TEMPLATE with todo-title before this template instance -->
 					<div id="change-group-order">
 						<button type="button">
 							<img class="order icon" src="./images/prospective-left/toolbars/top-order.svg" />
@@ -95,59 +106,118 @@
 					<!-- in settings, set default view -->
 					<!-- will open new browser window (restrictions on resize of existing window) -->
 					<button id="switch-to-default-view" type="button">
-						<img class="switch icon" src="./images/prospective-left/toolbars/top-default-view.svg" />
+						<img class="switch icon" src="./images/prospective-left/toolbars/bottom-default-view.svg" />
 					</button>
 					<button id="help" type="button">
-						<img class="open icon" src="./images/prospective-left/toolbars/bottom-help.svg">
+						<img class="help icon" src="./images/prospective-left/toolbars/bottom-help.svg">
 					</button>
 					<button id="settings" type="button">
-						<img class="open icon" src="./images/prospective-left/toolbars/bottom-settings.svg">
+						<img class="settings icon" src="./images/prospective-left/toolbars/bottom-settings.svg">
 					</button>
 				</div>
 			</div>
 			<div class="right panel">
-				<div class="container" id="day-view">
-					<div class="top-section">
-						<div class="date-info">
-							<div class="day-name">
-								<!-- GET FROM DAY OBJECT -->
+				<div class="main" id="day-view">
+					<div class="primary container">
+						<div class="top-section">
+							<div class="date-labels">
+								<span id="day-name">
+									<!-- GET FROM DAY OBJECT -->
+								</span>
+								<span>, </span>
+								<span id="month-name">
+									<!-- GET FROM DAY OBJECT -->
+								</span>
+								<span id="day-number">
+									<!-- GET FROM DAY OBJECT -->
+								</span>
 							</div>
-							<div class="single-line">
-								<button id="month" type="button">
-									<!-- GET FROM DAY OBJECT -->
-								</button>
-								<button id="day-number" type="button">
-									<!-- GET FROM DAY OBJECT -->
-								</button>
+							<div class="unscheduled">
+								<!-- for each event with no scheduled time or that has a time outside bounds of displayed time, APPEND EVENT_BOX FROM DAY_TEMPLATES -->
+								<!-- for each timed task with no scheduled time or that has a time outside bounds of displayed time, APPEND TIMER_BOX FROM DAY_TEMPLATES -->
+								<!-- for each NON-timed task with no scheduled time or that has a time outside bounds of displayed time, APPEND TASK_BOX FROM DAY_TEMPLATES -->
 							</div>
 						</div>
-						<!-- hide if screen:large once "day-details container" is built" -->
-						<div class="unscheduled">
-							<!-- for each event with no scheduled time, APPEND TIMER_BOX FROM DAY_TEMPLATES -->
-							<!-- for each task with no scheduled time, APPEND EVENT_BOX FROM DAY_TEMPLATES -->
+						<div class="middle-section">
+							
+							<!-- APPEND HOURS_LABEL FROM DAY_TEMPLATES -->
+							<!-- APPEND NOW_LABEL FROM DAY_TEMPLATES -->
+							<!-- css grid: 60 rows per hour -->
+							<!-- number of hours shown from settings -->
+	
+							<!-- APPEND TASK_BOX FROM DAY_TEMPLATES NEXT TO HOUR -->
+							<!-- APPEND EVENT_BOX FROM DAY_TEMPLATES NEXT TO HOUR-->
+							<!-- APPEND TIMER_BOX FROM DAY_TEMPLATES NEXT TO HOUR-->
+	
+							<!-- TODO LATER: overlay "work blocks" from settings -->
+						</div>
+						<div class="bottom-section">
+							<!-- for each non-scheduled variable in day object, APPEND VARIABLE_BUTTON FROM DAY_TEMPLATES -->
+							<!-- for each non-scheduled routine in day object, APPEND ROUTINE_BUTTON FROM DAY_TEMPLATES -->
 						</div>
 					</div>
-					<div class="middle-section">
-						<!-- APPEND HOURS_LABEL FROM DAY_TEMPLATES -->
-						<!-- css grid: 60 rows per hour -->
-						<!-- number of hours shown from settings -->
-
-						<!-- APPEND TASK_BOX FROM DAY_TEMPLATES NEXT TO HOUR -->
-						<!-- APPEND EVENT_BOX FROM DAY_TEMPLATES NEXT TO HOUR-->
-						<!-- APPEND TIMER_BOX FROM DAY_TEMPLATES NEXT TO HOUR-->
-
-						<!-- TODO LATER: overlay "work blocks" from settings -->
-					</div>
-					<div class="bottom-section">
-						<!-- APPEND measurement_BUTTON FROM DAY_TEMPLATES BY HOUR -->
-					</div>
-					<!-- TODO LATER: build out <div class="day-details container"> -->
+					<!-- on viewport horizontal expand, APPEND COMPARISON_DAY FROM DAY_TEMPLATES -->
 				</div>
-				<div class="hidden" id="week-view">
-					<!-- TODO: build -->
+				<div class="main hidden" id="week-view">
+					<!-- TODO LATER: build -->
 				</div>
-				<div class="hidden" id="month-view">
-					<!-- TODO: build -->
+				<div class="main hidden" id="month-view">
+					<!-- TODO LATER: build -->
+				</div>
+				<div class="main hidden" id="year-view">
+					<!-- TODO LATER: build -->
+				</div>
+				<div class="vertical-toolbars">
+					<div class="view-picker">
+						<form id="toggle-view-picker" name="toggle-view-picker" action="2did.com/" method="post">
+							<img class="calendar-view icon" src="./images/prospective-right/view.svg" />
+							<img class="date-picker icon empty" src="./images/prospective-left/todo-components/date.svg" />
+						</form>
+						<!-- if toggled to view, on click switches calendar view to selected type, give all other types class 'empty'-->
+						<!-- if toggled to picker, click shows picker for the selected type, give all other types 'empty' -->
+						<div>
+							<div class="left hidden">
+								<!-- TODO LATER: horizontal quick scroll through days of month -->
+							</div>
+							<button class="right dot" id="day-view" type="button">
+								D						
+							</button>
+						</div> 
+						<div>
+							<div class="left hidden">
+								<!-- TODO LATER: horizontal quick scroll through weeks -->
+								<!-- 52 weeks; 53 weeks if current year starts on thursday or is a leap year starting on Wednesday -->
+							</div>
+							<button class="right dot empty" id="week-view" type="button">
+								W
+							</button>
+						</div> 
+						<div>
+							<div class="left hidden">
+								<!-- TODO LATER: horizontal quick scroll through months -->
+							</div>
+							<button class="right dot empty" id="month-view" type="button">
+								M
+							</button>
+						</div> 
+						<div>
+							<div class="left hidden">
+								<!-- TODO LATER: horizontal quick scroll through years -->
+							</div>
+							<button class="right dot empty" id="year-view" type="button">
+								Y
+							</button>
+						</div> 	
+					</div>
+					<div class="zoom">
+						<button class="dot" type="button">
+							+
+						</button>
+						<button class="dot" type="button">
+							-
+						</button>
+						<!-- TODO LATER (if needed): add button to expand (rendering in-day scrolling unnecessary) -->
+					</div>			
 				</div>
 			</div>
 		</div>
